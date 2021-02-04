@@ -52,7 +52,7 @@ class _EditPasswordScreenState extends State<EditPasswordScreen> {
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
-          backgroundColor: Colors.green[900],
+          backgroundColor: Colors.green[700],
           textColor: Colors.white,
           fontSize: 14,
         );

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong/latlong.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../helpers/theme_helper.dart';
 
@@ -62,12 +63,11 @@ class _AdminMainScreenState extends State<AdminMainScreen> {
                   streamData.forEach((user) {
                     markers.add(Marker(
                         width: 80.0,
-                        height: 80.0,
+                        height: 110.0,
                         point: LatLng(user["location"]["latitude"],
                             user["location"]["longitude"]),
                         builder: (context) => GestureDetector(
                               onTap: () {
-                                print(user["name"]);
                                 Scaffold.of(context).showBottomSheet(
                                     (context) =>
                                         _userInfoBottomSheet(sheetUsers));
@@ -75,6 +75,20 @@ class _AdminMainScreenState extends State<AdminMainScreen> {
                               child: Container(
                                 child: Column(
                                   children: [
+                                    Text(
+                                      user["name"].toString().split(" ")[0],
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headline1
+                                          .copyWith(
+                                              color: ColorConstant.deepBlue,
+                                              fontWeight: FontWeight.bold,
+                                              backgroundColor: Colors.white,
+                                              fontSize: 18),
+                                    ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
                                     UserImgWidget(
                                       imgUrl: user["officerImgURL"],
                                       size: 55,
@@ -99,7 +113,7 @@ class _AdminMainScreenState extends State<AdminMainScreen> {
                     mapController: mapController,
                     options: MapOptions(
                       center: center,
-                      zoom: 13,
+                      zoom: 14,
                     ),
                     nonRotatedLayers: [
                       TileLayerOptions(
@@ -145,17 +159,22 @@ class _AdminMainScreenState extends State<AdminMainScreen> {
   Container _userInfoBottomSheet(List user) {
     return Container(
       color: Colors.white,
-      padding: EdgeInsets.only(top: 10),
       height: MediaQuery.of(context).size.height * 0.30,
       child: ListView.builder(
         itemCount: user.length,
         itemBuilder: (context, index) {
+          int _selectedIndex;
+
           return Container(
+            margin: EdgeInsets.only(bottom: 2),
             child: ListTile(
+              selected: index == _selectedIndex,
+              selectedTileColor: ColorConstant.deepBlue,
               onTap: () {
                 setState(() {
                   center = LatLng(user[index]["location"]["latitude"],
                       user[index]["location"]["longitude"]);
+                  _selectedIndex = index;
                 });
               },
               leading: UserImgWidget(
@@ -166,17 +185,27 @@ class _AdminMainScreenState extends State<AdminMainScreen> {
                 user[index]["name"],
                 style: Theme.of(context).textTheme.headline2.copyWith(
                       fontWeight: FontWeight.bold,
-                      color: ColorConstant.deepBlue,
+                      color: Colors.black,
                       fontSize: 16,
                     ),
               ),
               subtitle: Text(
                 user[index]["mobileno"],
                 style: Theme.of(context).textTheme.headline2.copyWith(
-                      color: ColorConstant.deepBlue,
+                      color: Colors.black,
                       fontSize: 16,
                     ),
               ),
+              trailing: IconButton(
+                  icon: Icon(Icons.call, color: ColorConstant.deepBlue),
+                  onPressed: () async {
+                    String url = "tel:${user[index]["mobileno"]}";
+                    if (await canLaunch(url)) {
+                      await launch(url);
+                    } else {
+                      throw 'Could not launch $url';
+                    }
+                  }),
             ),
           );
         },

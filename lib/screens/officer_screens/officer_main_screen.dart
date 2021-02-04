@@ -84,7 +84,6 @@ class _OfficerMainScreenState extends State<OfficerMainScreen> {
 
                           final userLocation =
                               LatLng(latitude.toDouble(), longitude.toDouble());
-
                           return FlutterMap(
                             mapController: mapController,
                             options: MapOptions(

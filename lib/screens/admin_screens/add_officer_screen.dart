@@ -123,50 +123,10 @@ class _AddOfficerState extends State<AddOfficer> {
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
-          backgroundColor: Colors.green[900],
+          backgroundColor: Colors.green[700],
           textColor: Colors.white,
           fontSize: 14,
         );
-        /* LoggerInfo addUser = LoggerInfo(
-            loggerName: _officerFullName.text.toString(),
-            loggerMobNo: _officerMobileNo.text.toString(),
-            loggerStationCode: _officerCity.text.toString(),
-            loggerDob: _officerDOB.text..toString(),
-            loggerImg: _officerImg,
-            loggerType: _officerType);
-        userCredential = await FirebaseAuth.instanceFor(app: app)
-            .createUserWithEmailAndPassword(
-          email: addUser.loggerMobNo + "@boothpatrolling.com",
-          password: addUser.loggerDob.toString().replaceAll("-", ""),
-        );
-        await FirebaseFirestore.instance
-            .collection("officers")
-            .doc(userCredential.user.uid)
-            .set({
-          "name": addUser.loggerName,
-          "mobileno": addUser.loggerMobNo,
-          "city": addUser.loggerStationCode,
-          "dob": addUser.loggerDob,
-          "type": addUser.loggerType,
-          "addedBy": userCredential.user.uid.toString()
-        });
-
-        if (_officerImg != null) {
-          final ref = FirebaseStorage.instance
-              .ref()
-              .child("officer_imgs")
-              .child(userCredential.user.uid + ".jpg");
-          await ref.putFile(addUser.loggerImg);
-          print("img uploaded for " + userCredential.user.uid.toString());
-
-          String oiu = await ref.getDownloadURL();
-          await FirebaseFirestore.instance
-              .collection("officers")
-              .doc(userCredential.user.uid)
-              .update({"officerImgURL": oiu});
-        }
-        dialogBox(context, "Officer added",
-            "${addUser.loggerName} successfully added", Icons.check_box); */
       } catch (e) {
         print("Firebase secondary try:");
         print(e);
@@ -191,28 +151,6 @@ class _AddOfficerState extends State<AddOfficer> {
             err.message.toString().replaceAll("email address", "Mobile Number");
       }
       dialogBox(context, "Error", errmsg, Icons.error);
-      // showDialog(
-      //   context: context,
-      //   builder: (_) => AlertDialog(
-      //     title: Text("Error"),
-      //     content: SingleChildScrollView(
-      //       child: Container(
-      //         child: Text(errmsg),
-      //       ),
-      //     ),
-      //     actions: [
-      //       FlatButton(
-      //           onPressed: () => Navigator.of(context).pop(),
-      //           child: Text(
-      //             "Ok",
-      //             style: Theme.of(context)
-      //                 .textTheme
-      //                 .headline1
-      //                 .copyWith(fontSize: 16),
-      //           ))
-      //     ],
-      //   ),
-      // );
     } catch (err) {
       print("ADD OFFICER ERROR: $err");
     }
@@ -290,180 +228,6 @@ class _AddOfficerState extends State<AddOfficer> {
                       ),
           ],
         ),
-        /*       child: Form(
-          key: _addOfficerFormKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                child: OfficerImagePicker(_pickedImg, ""),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 18.0),
-                child: Text(
-                  "Personal Information",
-                  style: Theme.of(context).textTheme.headline1.copyWith(
-                      color: ColorConstant.deepBlue,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold),
-                ),
-              ),
-              TextFormField(
-                controller: _officerFullName,
-                keyboardType: TextInputType.name,
-                textCapitalization: TextCapitalization.words,
-                enabled: _personalInfoFilled ? false : true,
-                style: Theme.of(context)
-                    .textTheme
-                    .headline1
-                    .copyWith(fontSize: 18),
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Full Name',
-                ),
-                enableSuggestions: true,
-                onFieldSubmitted: (value) =>
-                    FocusScope.of(context).requestFocus(_focusMobNo),
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return "Please enter officer name";
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 15),
-              TextFormField(
-                controller: _officerMobileNo,
-                focusNode: _focusMobNo,
-                keyboardType: TextInputType.phone,
-                enabled: _personalInfoFilled ? false : true,
-                style: Theme.of(context)
-                    .textTheme
-                    .headline1
-                    .copyWith(fontSize: 18),
-                maxLength: 10,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Mobile Number',
-                ),
-                onFieldSubmitted: (value) =>
-                    FocusScope.of(context).requestFocus(_focusCity),
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return "Please enter officer mobile number";
-                  } else if (value.length != 10) {
-                    return "Please enter correct mobile number";
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 10),
-              TextFormField(
-                controller: _officerCity,
-                focusNode: _focusCity,
-                keyboardType: TextInputType.streetAddress,
-                textCapitalization: TextCapitalization.words,
-                enabled: _personalInfoFilled ? false : true,
-                style: Theme.of(context)
-                    .textTheme
-                    .headline1
-                    .copyWith(fontSize: 18),
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'City',
-                ),
-                onFieldSubmitted: (value) =>
-                    FocusScope.of(context).requestFocus(_focusDOB),
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return "Please enter city";
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 15),
-              TextFormField(
-                controller: _officerDOB,
-                focusNode: _focusDOB,
-                keyboardType: TextInputType.number,
-                enabled: _personalInfoFilled ? false : true,
-                onTap: () async {
-                  DateTime _selectedDate = await showDatePicker(
-                    context: context,
-                    initialDate: DateTime.now(),
-                    firstDate: DateTime(1950),
-                    lastDate: DateTime.now(),
-                  );
-                  _officerDOB.text = (_selectedDate == null)
-                      ? ""
-                      : _selectedDate.toLocal().toString().split(' ')[0];
-                },
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Date of Birth',
-                    hintText: "YYYY-MM-DD",
-                    suffixIcon: Icon(Icons.calendar_today)),
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return "Please enter date of birth";
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 15),
-              ListTile(
-                title: Text(
-                  "Officer Type",
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline1
-                      .copyWith(color: Colors.black, fontSize: 18),
-                ),
-                trailing: DropdownButton(
-                  value: _officerType,
-                  items: [
-                    DropdownMenuItem(value: "officer", child: Text("Officer")),
-                    DropdownMenuItem(value: "admin", child: Text("Admin"))
-                  ],
-                  onChanged: (value) {
-                    setState(() {
-                      _officerType = value;
-                    });
-                  },
-                ),
-              ),
-              _isLoading
-                  ? CircularProgressIndicator()
-                  : _personalInfoFilled
-                      ? LoginInfoCardWidget(
-                          officerName: _officerFullName.text.toString(),
-                          officerMobileNo: _officerMobileNo.text.toString(),
-                          officerDOB: _officerDOB.text.toString())
-                      : FlatButton(
-                          minWidth: double.infinity,
-                          onPressed: _saveAndSubmitInformation,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(1.0),
-                          ),
-                          color: ColorConstant.deepBlue,
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 15, vertical: 8),
-                            child: Text(
-                              "Save",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline1
-                                  .copyWith(
-                                      color: Colors.white,
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w600),
-                            ),
-                          ),
-                        ),
-            ],
-          ),
-        ), */
       ),
     );
   }
@@ -496,8 +260,7 @@ class LoginInfoCardWidget extends StatelessWidget {
                   fontWeight: FontWeight.w700),
             ),
             SizedBox(height: 15),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            Wrap(
               children: [
                 Text(
                   "Mobile Number:",
@@ -505,6 +268,9 @@ class LoginInfoCardWidget extends StatelessWidget {
                       color: ColorConstant.deepBlue,
                       fontSize: 18,
                       fontWeight: FontWeight.bold),
+                ),
+                SizedBox(
+                  width: 25,
                 ),
                 Text(
                   officerMobileNo.toString(),
@@ -516,8 +282,7 @@ class LoginInfoCardWidget extends StatelessWidget {
               ],
             ),
             SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            Wrap(
               children: [
                 Text(
                   "Password:",
@@ -525,6 +290,9 @@ class LoginInfoCardWidget extends StatelessWidget {
                       color: ColorConstant.deepBlue,
                       fontSize: 18,
                       fontWeight: FontWeight.bold),
+                ),
+                SizedBox(
+                  width: 25,
                 ),
                 Text(
                   officerDOB.toString().replaceAll("-", ""),

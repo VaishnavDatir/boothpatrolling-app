@@ -47,9 +47,13 @@ class AppDrawer extends StatelessWidget {
                         .headline2
                         .copyWith(fontSize: 17, color: Colors.black),
                   ),
-                  onTap: () {
-                    Navigator.of(context)
-                        .popAndPushNamed(FeedbackScreen.routeName);
+                  onTap: () async {
+                    await Navigator.of(context).push(
+                        MaterialPageRoute(builder: (BuildContext context) {
+                      return FeedbackScreen(
+                        userInfo: userInfo,
+                      );
+                    }));
                   },
                 )
               ],
