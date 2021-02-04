@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "312228811830",
+    "project_id": "boothpatrolling-app",
+    "storage_bucket": "boothpatrolling-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:312228811830:android:91315a715bcab8577d3497",
+        "android_client_info": {
+          "package_name": "com.application.boothpatrolling"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "312228811830-71e8617gpudahfvevvgf2m73ivuomsc4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAF07ardk6U00G6yu3wMgZxUFZS30z2AxA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "312228811830-71e8617gpudahfvevvgf2m73ivuomsc4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
