@@ -150,7 +150,7 @@ class _AddOfficerState extends State<AddOfficer> {
         errmsg =
             err.message.toString().replaceAll("email address", "Mobile Number");
       }
-      dialogBox(context, "Error", errmsg, Icons.error);
+      DialogBox().dialogBox(context, "Error", errmsg, Icons.error);
     } catch (err) {
       print("ADD OFFICER ERROR: $err");
     }

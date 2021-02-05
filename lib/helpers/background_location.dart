@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import './user_managemet.dart';
+import 'user_management.dart';
 
 void backgroundMain() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,7 +26,7 @@ class LocationService {
       _permissionGranted = await myLocation.requestPermission();
       if (_permissionGranted != PermissionStatus.granted) {
         Fluttertoast.showToast(
-          msg: "Please grant the premission for location",
+          msg: "Please grant the permission for location",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
@@ -57,7 +57,7 @@ class LocationService {
     locationSubscription =
         myLocation.onLocationChanged.listen((LocationData currentLoction) {
       print("MY LOCATION");
-      print("Acuracy: " +
+      print("Accuracy: " +
           currentLoction.accuracy.toStringAsFixed(0) +
           " latitude: " +
           currentLoction.latitude.toString() +

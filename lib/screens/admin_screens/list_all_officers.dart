@@ -36,7 +36,19 @@ class ListAllOfficersScreen extends StatelessWidget {
             );
           } else {
             if (snapshot.hasData) {
-              final streamData = snapshot.data.docs;
+              List streamData = snapshot.data.docs;
+              if (streamData.isEmpty) {
+                return Center(
+                  child: Text(
+                    "There are no officers in your list",
+                    style: Theme.of(context).textTheme.headline2.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: ColorConstant.deepBlue,
+                          fontSize: 18,
+                        ),
+                  ),
+                );
+              }
               return ListView.builder(
                 itemCount: streamData.length,
                 itemBuilder: (context, index) {
@@ -100,11 +112,6 @@ class ListAllOfficersScreen extends StatelessWidget {
                                         fontSize: 16,
                                       ),
                                 ),
-                                trailing: Icon(
-                                  Icons.location_on,
-                                  color: ColorConstant.deepBlue,
-                                  size: 28,
-                                ),
                               )
                             : null
                         : null,
@@ -112,13 +119,15 @@ class ListAllOfficersScreen extends StatelessWidget {
                 },
               );
             } else {
-              return Text(
-                "No data found",
-                style: Theme.of(context).textTheme.headline2.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: ColorConstant.deepBlue,
-                      fontSize: 18,
-                    ),
+              return Center(
+                child: Text(
+                  "No data found",
+                  style: Theme.of(context).textTheme.headline2.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: ColorConstant.deepBlue,
+                        fontSize: 18,
+                      ),
+                ),
               );
             }
           }

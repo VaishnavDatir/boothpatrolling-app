@@ -58,7 +58,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
         fontSize: 14,
       );
     } on FirebaseException catch (e) {
-      dialogBox(context, "Error", e.toString(), Icons.error);
+      DialogBox().dialogBox(context, "Error", e.toString(), Icons.error);
     } catch (err) {
       print("the error in feedback");
       print(err);

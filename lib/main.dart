@@ -4,7 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 
 //HELPERS
 import './helpers/theme_helper.dart';
-import './helpers/user_managemet.dart';
+import 'helpers/user_management.dart';
 
 //SCREENS
 import './screens/login_screen.dart';
@@ -42,20 +42,12 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return _wrapWithBanner(MaterialApp(
       title: 'Booth Patrolling',
       theme: AppTheme().lightTheme,
-      // home: StreamBuilder(
-      //   stream: FirebaseAuth.instance.authStateChanges(),
-      //   builder: (context, snapshot) {
-      //     if (snapshot.hasData) {}
-      //     return LoginScreen();
-      //   },
-      // ),
-      home: _wrapWithBanner(AppRetainWidget(
+      home: AppRetainWidget(
         child: UserManagement().handleAuth(),
-      )),
-      // UserManagement().handleAuth(),
+      ),
       routes: {
         LoginScreen.routeName: (ctx) => LoginScreen(),
         OfficerMainScreen.routeName: (ctx) => OfficerMainScreen(),
@@ -68,18 +60,21 @@ class MyApp extends StatelessWidget {
         FeedbackScreen.routeName: (ctx) => FeedbackScreen(),
         OfficerDetailScreen.routeName: (ctx) => OfficerDetailScreen(),
       },
+    ));
+  }
+
+  Widget _wrapWithBanner(Widget child) {
+    return Directionality(
+      textDirection: TextDirection.ltr,
+      child: Banner(
+        child: child,
+        location: BannerLocation.bottomEnd,
+        message: 'BETA',
+        color: Colors.green[800],
+        textStyle: TextStyle(
+            fontWeight: FontWeight.w700, fontSize: 12.0, letterSpacing: 1.0),
+        textDirection: TextDirection.ltr,
+      ),
     );
   }
-}
-
-Widget _wrapWithBanner(Widget child) {
-  return Banner(
-    child: child,
-    location: BannerLocation.bottomEnd,
-    message: 'BETA',
-    color: Colors.green,
-    textStyle: TextStyle(
-        fontWeight: FontWeight.w700, fontSize: 12.0, letterSpacing: 1.0),
-    textDirection: TextDirection.ltr,
-  );
 }

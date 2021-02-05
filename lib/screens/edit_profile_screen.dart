@@ -98,7 +98,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     } on FirebaseException catch (err) {
       print("firestore error:");
       print(err);
-      dialogBox(context, "Error", err.message, Icons.error);
+      DialogBox().dialogBox(context, "Error", err.message, Icons.error);
     } catch (error) {
       print("main error");
       print(error);

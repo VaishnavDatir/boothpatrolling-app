@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../helpers/theme_helper.dart';
-import '../helpers/user_managemet.dart';
+import '../helpers/user_management.dart';
 
 import '../widgets/userImag_widget.dart';
 

@@ -46,7 +46,6 @@ class _OfficerMainScreenState extends State<OfficerMainScreen> {
   //   super.initState();
   //   UserManagement().onDutyDefault();
   // }
-  MapController mapController;
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +84,6 @@ class _OfficerMainScreenState extends State<OfficerMainScreen> {
                           final userLocation =
                               LatLng(latitude.toDouble(), longitude.toDouble());
                           return FlutterMap(
-                            mapController: mapController,
                             options: MapOptions(
                               center: userLocation,
                               zoom: 13,

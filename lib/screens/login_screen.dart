@@ -5,7 +5,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import '../screens/admin_screens/admin_main_screen.dart';
 //helpers
 
-import '../helpers/user_managemet.dart';
+import '../helpers/user_management.dart';
 import '../helpers/theme_helper.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -56,7 +56,7 @@ class _LoginFormState extends State<LoginForm> {
   // UserCredential userCredential;
 
   // bool _loginInfoFilled = false;
-  bool _isLoading = false;
+  // bool _isLoading = false;
 
   final _loginFormKey = GlobalKey<FormState>();
 
@@ -86,9 +86,9 @@ class _LoginFormState extends State<LoginForm> {
       print("Invalid");
       return;
     }
-    setState(() {
+    /*  setState(() {
       _isLoading = true;
-    });
+    }); */
     print("valid");
     try {
       _loginFormKey.currentState.save();
@@ -101,12 +101,16 @@ class _LoginFormState extends State<LoginForm> {
 
       await UserManagement()
           .signIn(_loginData["mobileno"], _loginData["password"], context);
-      _isLoading = false;
-      setState(() {});
+
+      /* _isLoading = false;
+      setState(() {}); */
     } catch (e) {
       print("Error in login Screen: ");
       print(e);
     }
+    /* finally {
+      DialogBox.loaderDialogPop(context);
+    } */
   }
 
   @override
@@ -173,29 +177,28 @@ class _LoginFormState extends State<LoginForm> {
                   SizedBox(height: 10),
                   Align(
                     alignment: Alignment.centerRight,
-                    child: _isLoading
+                    child:
+                        /* _isLoading
                         ? CircularProgressIndicator()
-                        : FlatButton(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(4.0),
-                            ),
-                            color: ColorConstant.deepBlue,
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 15, vertical: 8),
-                              child: Text(
-                                "Login",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline1
-                                    .copyWith(
-                                        color: Colors.white,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w500),
-                              ),
-                            ),
-                            onPressed: officerLogin,
-                          ),
+                        :  */
+                        FlatButton(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(4.0),
+                      ),
+                      color: ColorConstant.deepBlue,
+                      child: Padding(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+                        child: Text(
+                          "Login",
+                          style: Theme.of(context).textTheme.headline1.copyWith(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                      onPressed: officerLogin,
+                    ),
                   )
                 ],
               ),

@@ -34,7 +34,7 @@ class _EditPasswordScreenState extends State<EditPasswordScreen> {
         return;
       }
       if (_password.text != _conformPassword.text) {
-        dialogBox(
+        DialogBox().dialogBox(
             context, "Password Error", "Password does not match", Icons.error);
         _password.text = "";
         _conformPassword.text = "";
@@ -59,7 +59,8 @@ class _EditPasswordScreenState extends State<EditPasswordScreen> {
         _password.text = "";
         _conformPassword.text = "";
       } on FirebaseException catch (err) {
-        dialogBox(context, "Password Error", err.message, Icons.error);
+        DialogBox()
+            .dialogBox(context, "Password Error", err.message, Icons.error);
         _password.text = "";
         _conformPassword.text = "";
       } catch (er) {

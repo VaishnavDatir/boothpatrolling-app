@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import './dialogBox.dart';
 
@@ -74,23 +75,48 @@ class UserManagement {
   }
 
   signIn(String mobNo, String password, BuildContext ctx) async {
+    DialogBox().showLoaderDialog(ctx);
+
     await _auth
         .signInWithEmailAndPassword(email: mobNo, password: password)
+        .then((value) => DialogBox().loaderDialogPop(ctx))
         .catchError((authErr) async {
-      var errmsg = "An error occured, please check filled information";
+      var errMsg = "An error occurred, please check filled information";
       if (authErr.message != null) {
-        errmsg = authErr.message
+        errMsg = authErr.message
             .toString()
             .replaceAll("email address", "Mobile Number");
       }
-
-      await dialogBox(ctx, "Error", errmsg, Icons.error);
+      DialogBox().loaderDialogPop(ctx);
+      await DialogBox().dialogBox(ctx, "Error", errMsg, Icons.error);
     });
   }
 
   signOut(BuildContext ctx) {
     print("SignOUT");
-    FirebaseAuth.instance.signOut();
+    // Dialogs.showLoadingDialog(ctx);
+    DialogBox().showLoaderDialog(ctx);
+    FirebaseAuth.instance.signOut().then((value) {
+      Fluttertoast.showToast(
+        msg: "You have been logged out",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.green[700],
+        textColor: Colors.white,
+        fontSize: 14,
+      );
+    }).catchError((err) {
+      Fluttertoast.showToast(
+        msg: "Error while logging out",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red[700],
+        textColor: Colors.white,
+        fontSize: 14,
+      );
+    }).whenComplete(() => DialogBox().loaderDialogPop(ctx));
   }
 
   updateLocation(double latitude, double longitude, double accuracy) {
@@ -118,3 +144,24 @@ class UserManagement {
         .update({"onDuty": false});
   }
 }
+
+// class Dialogs {
+//   static Future<void> showLoadingDialog(BuildContext context) async {
+//     return showDialog<void>(
+//         context: context,
+//         barrierDismissible: false,
+//         builder: (BuildContext context) {
+//           // return WillPopScope(
+//           //     onWillPop: () async => false,
+//           //     child: SimpleDialog(children: <Widget>[
+
+//           //       Center(
+//           //         child: CircularProgressIndicator(),
+//           //       )
+//           //     ]));
+//           return Dialog(
+//             child: Container(child: Center(child: CircularProgressIndicator())),
+//           );
+//         });
+//   }
+// }
