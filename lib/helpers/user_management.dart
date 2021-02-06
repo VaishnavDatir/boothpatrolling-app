@@ -76,7 +76,6 @@ class UserManagement {
 
   signIn(String mobNo, String password, BuildContext ctx) async {
     DialogBox().showLoaderDialog(ctx);
-
     await _auth
         .signInWithEmailAndPassword(email: mobNo, password: password)
         .then((value) => DialogBox().loaderDialogPop(ctx))
@@ -94,7 +93,6 @@ class UserManagement {
 
   signOut(BuildContext ctx) {
     print("SignOUT");
-    // Dialogs.showLoadingDialog(ctx);
     DialogBox().showLoaderDialog(ctx);
     FirebaseAuth.instance.signOut().then((value) {
       Fluttertoast.showToast(
@@ -144,24 +142,3 @@ class UserManagement {
         .update({"onDuty": false});
   }
 }
-
-// class Dialogs {
-//   static Future<void> showLoadingDialog(BuildContext context) async {
-//     return showDialog<void>(
-//         context: context,
-//         barrierDismissible: false,
-//         builder: (BuildContext context) {
-//           // return WillPopScope(
-//           //     onWillPop: () async => false,
-//           //     child: SimpleDialog(children: <Widget>[
-
-//           //       Center(
-//           //         child: CircularProgressIndicator(),
-//           //       )
-//           //     ]));
-//           return Dialog(
-//             child: Container(child: Center(child: CircularProgressIndicator())),
-//           );
-//         });
-//   }
-// }

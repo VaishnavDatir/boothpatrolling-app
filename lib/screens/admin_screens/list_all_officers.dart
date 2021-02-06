@@ -84,10 +84,14 @@ class ListAllOfficersScreen extends StatelessWidget {
                                     SizedBox(
                                       width: 10,
                                     ),
-                                    UserImgWidget(
-                                      imgUrl: streamData[index]["officerImgURL"]
-                                          .toString(),
-                                      size: 55,
+                                    Hero(
+                                      tag: streamData[index]["uid"],
+                                      child: UserImgWidget(
+                                        imgUrl: streamData[index]
+                                                ["officerImgURL"]
+                                            .toString(),
+                                        size: 55,
+                                      ),
                                     )
                                   ],
                                 ),

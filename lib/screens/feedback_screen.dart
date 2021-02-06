@@ -6,7 +6,7 @@ import '../helpers/theme_helper.dart';
 import '../helpers/dialogBox.dart';
 
 class FeedbackScreen extends StatefulWidget {
-  static const routeName = '/AboutScreen';
+  static const routeName = '/FeedbackScreen';
   final Map<String, dynamic> userInfo;
   FeedbackScreen({this.userInfo});
 
@@ -72,12 +72,19 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        extendBodyBehindAppBar: true,
         appBar: AppBar(
-          elevation: 0,
           brightness: Brightness.light,
           iconTheme: IconThemeData(color: ColorConstant.deepBlue),
           backgroundColor: Colors.transparent,
+          titleSpacing: 0,
+          elevation: 0,
+          title: Text(
+            "Feedback",
+            style: Theme.of(context)
+                .textTheme
+                .headline1
+                .copyWith(color: ColorConstant.deepBlue, fontSize: 20),
+          ),
         ),
         body: Container(
           width: double.infinity,
@@ -90,12 +97,12 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Image.asset(
-                      "assets/images/logo2Black.png",
-                      height: 150,
+                    Hero(
+                      tag: "AppLogo",
+                      child: Image.asset(
+                        "assets/images/logo2Black.png",
+                        height: 150,
+                      ),
                     ),
                     Divider(),
                     Padding(

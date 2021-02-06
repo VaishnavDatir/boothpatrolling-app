@@ -7,10 +7,8 @@ import '../widgets/userImag_widget.dart';
 
 import '../screens/admin_screens/add_officer_screen.dart';
 import '../screens/admin_screens/list_all_officers.dart';
-
 import '../screens/edit_profile_screen.dart';
-
-import '../screens/feedback_screen.dart';
+import '../screens/help_screen.dart';
 
 class AppDrawer extends StatelessWidget {
   final Map<String, dynamic> userInfo;
@@ -37,11 +35,11 @@ class AppDrawer extends StatelessWidget {
                 DrawerLogout(),
                 ListTile(
                   leading: Icon(
-                    Icons.feedback,
+                    Icons.help,
                     color: Colors.black,
                   ),
                   title: Text(
-                    "Feedback",
+                    "Help",
                     style: Theme.of(context)
                         .textTheme
                         .headline2
@@ -50,7 +48,7 @@ class AppDrawer extends StatelessWidget {
                   onTap: () async {
                     await Navigator.of(context).push(
                         MaterialPageRoute(builder: (BuildContext context) {
-                      return FeedbackScreen(
+                      return HelpScreen(
                         userInfo: userInfo,
                       );
                     }));

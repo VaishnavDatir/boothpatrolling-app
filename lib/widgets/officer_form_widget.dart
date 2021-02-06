@@ -49,12 +49,6 @@ class _OfficerFormState extends State<OfficerForm> {
         widget.userInfos == null ? "" : widget.userInfos["officerImgURL"] ?? "";
   }
 
-  // File _officerImg;
-
-  // void _pickedImg(File img) {
-  //   _officerImg = img;
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Form(

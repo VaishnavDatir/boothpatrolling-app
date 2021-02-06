@@ -79,32 +79,60 @@ class _OfficerImagePickerState extends State<OfficerImagePicker> {
       },
       child: Stack(
         children: [
-          (widget.imgUrl.isNotEmpty || widget.imgUrl == null)
-              ? Container(
-                  height: 80,
-                  width: 80,
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: NetworkImage(widget.imgUrl),
-                          fit: BoxFit.cover),
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(50),
-                      border: Border.all(
-                          color: ColorConstant.dodgerBlue, width: 2)),
-                  // child: Image.network(userImgUrl),
-                )
-              : _image == null
-                  ? Icon(
+          // (widget.imgUrl.isNotEmpty || widget.imgUrl == null)
+          //     ? Container(
+          //         height: 80,
+          //         width: 80,
+          //         decoration: BoxDecoration(
+          //             image: DecorationImage(
+          //                 image: NetworkImage(widget.imgUrl),
+          //                 fit: BoxFit.cover),
+          //             color: Colors.white,
+          //             borderRadius: BorderRadius.circular(50),
+          //             border: Border.all(
+          //                 color: ColorConstant.dodgerBlue, width: 2)),
+          //         // child: Image.network(userImgUrl),
+          //       )
+          //     : _image == null
+          //         ? Icon(
+          //             Icons.person,
+          //             size: 60,
+          //             color: Colors.grey,
+          //           )
+          //         : CircleAvatar(
+          //             radius: 50,
+          //             backgroundColor: Colors.grey,
+          //             backgroundImage:
+          //                 _image != null ? FileImage(_image, scale: 1) : null,
+          //           ),
+
+          _image == null
+              ? (widget.imgUrl.isNotEmpty || widget.imgUrl == null)
+                  ? Container(
+                      height: 80,
+                      width: 80,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: NetworkImage(widget.imgUrl),
+                              fit: BoxFit.cover),
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(50),
+                          border: Border.all(
+                              color: ColorConstant.dodgerBlue, width: 2)),
+                      // child: Image.network(userImgUrl),
+                    )
+                  : Icon(
                       Icons.person,
                       size: 60,
                       color: Colors.grey,
                     )
-                  : CircleAvatar(
-                      radius: 50,
-                      backgroundColor: Colors.grey,
-                      backgroundImage:
-                          _image != null ? FileImage(_image, scale: 1) : null,
-                    ),
+              : CircleAvatar(
+                  radius: 50,
+                  backgroundColor: Colors.grey,
+                  backgroundImage:
+                      _image != null ? FileImage(_image, scale: 1) : null,
+                ),
+
           Positioned.fill(
               child: Align(
                   alignment: Alignment.bottomRight,

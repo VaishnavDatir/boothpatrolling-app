@@ -3,13 +3,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
 import 'dart:io';
 
 import '../model/logger_info.dart';
 
 import '../helpers/theme_helper.dart';
 import '../helpers/dialogBox.dart';
+import '../helpers/screen_transition.dart';
 
 import '../widgets/officer_form_widget.dart';
 
@@ -29,17 +29,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   final _editOfficerFormKey = GlobalKey<FormState>();
   LoggerInfo editUser = LoggerInfo();
 
-  // final _editofficerFullName = TextEditingController();
-
-  // final _editOfficerMobileNo = TextEditingController();
-  // final _focusNodeEditMobileNo = FocusNode();
-
-  // final _editOfficerCity = TextEditingController();
-  // final _focusEditCity = FocusNode();
-
-  // final _editOfficerDOB = TextEditingController();
-  // final _focusEditDOB = FocusNode();
-
   File _officerImg;
 
   void _pickedImg(File img) {
@@ -52,18 +41,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       print("Edit officer info Invalid");
       return;
     }
-    setState(() {
-      _isLoading = true;
-    });
+    // setState(() {
+    //   _isLoading = true;
+    // });
+    DialogBox().showLoaderDialog(context);
     try {
       _editOfficerFormKey.currentState.save();
-      /* LoggerInfo updateUser = LoggerInfo(
-        loggerName: _editofficerFullName.text.toString(),
-        loggerMobNo: _editOfficerMobileNo.text.toString(),
-        loggerStationCode: _editOfficerCity.text.toString(),
-        loggerDob: _editOfficerDOB.text..toString(),
-        loggerImg: _officerImg,
-      );*/
+
       await FirebaseFirestore.instance
           .collection("officers")
           .doc(FirebaseAuth.instance.currentUser.uid)
@@ -96,16 +80,21 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         fontSize: 14,
       );
     } on FirebaseException catch (err) {
+      DialogBox().loaderDialogPop(context);
       print("firestore error:");
       print(err);
       DialogBox().dialogBox(context, "Error", err.message, Icons.error);
     } catch (error) {
+      DialogBox().loaderDialogPop(context);
+
       print("main error");
       print(error);
     }
-    setState(() {
-      _isLoading = false;
-    });
+    DialogBox().loaderDialogPop(context);
+
+    // setState(() {
+    //   _isLoading = false;
+    // });
   }
 
   @override
@@ -123,7 +112,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       ),
       body: SingleChildScrollView(
         physics: ClampingScrollPhysics(),
-        padding: EdgeInsets.only(top: 10.0, right: 15, left: 15),
+        padding: EdgeInsets.only(top: 10.0, right: 15, left: 15, bottom: 20.0),
         child: Column(
           children: [
             OfficerForm(
@@ -138,7 +127,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       FlatButton(
                         onPressed: () {
                           Navigator.of(context)
-                              .pushNamed(EditPasswordScreen.routeName);
+                              .push(SlideLRRoute(page: EditPasswordScreen()));
                         },
                         shape: RoundedRectangleBorder(
                           side: BorderSide(

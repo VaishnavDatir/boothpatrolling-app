@@ -50,9 +50,10 @@ class _AddOfficerState extends State<AddOfficer> {
     }
 
     try {
-      setState(() {
-        _isLoading = true;
-      });
+      // setState(() {
+      //   _isLoading = true;
+      // });
+      DialogBox().showLoaderDialog(context);
       app = await Firebase.initializeApp(
           name: 'Secondary', options: Firebase.app().options);
       try {
@@ -133,11 +134,12 @@ class _AddOfficerState extends State<AddOfficer> {
         throw (e);
       } finally {
         await app.delete();
+        DialogBox().loaderDialogPop(context);
       }
 
       setState(() {
         _personalInfoFilled = true;
-        _isLoading = false;
+        // _isLoading = false;
       });
     } on FirebaseAuthException catch (err) {
       setState(() {

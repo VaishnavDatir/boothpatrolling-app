@@ -40,10 +40,13 @@ class _OfficerDetailScreenState extends State<OfficerDetailScreen> {
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 final streamData = snapshot.data;
-                var latitude = (streamData["location"]["latitude"]);
-                var longitude = streamData["location"]["longitude"];
-                final userLocation =
-                    LatLng(latitude.toDouble(), longitude.toDouble());
+                LatLng userLocation;
+                try {
+                  var latitude = (streamData["location"]["latitude"]);
+                  var longitude = streamData["location"]["longitude"];
+                  userLocation =
+                      LatLng(latitude.toDouble(), longitude.toDouble());
+                } catch (e) {}
                 return Stack(
                   children: [
                     Align(
@@ -82,9 +85,12 @@ class _OfficerDetailScreenState extends State<OfficerDetailScreen> {
                               builder: (context) => Container(
                                     child: Column(
                                       children: [
-                                        UserImgWidget(
-                                          imgUrl: streamData["officerImgURL"],
-                                          size: 55,
+                                        Hero(
+                                          tag: streamData["uid"],
+                                          child: UserImgWidget(
+                                            imgUrl: streamData["officerImgURL"],
+                                            size: 55,
+                                          ),
                                         ),
                                         SizedBox(
                                           height: 5,

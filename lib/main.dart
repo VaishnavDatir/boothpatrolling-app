@@ -11,7 +11,8 @@ import './screens/login_screen.dart';
 import './screens/edit_profile_screen.dart';
 import './screens/edit_password.dart';
 import './screens/loading_screen.dart';
-import 'screens/feedback_screen.dart';
+import './screens/help_screen.dart';
+import './screens/feedback_screen.dart';
 
 //Officer screens
 import './screens/officer_screens/officer_main_screen.dart';
@@ -21,6 +22,7 @@ import './screens/admin_screens/admin_main_screen.dart';
 import './screens/admin_screens/add_officer_screen.dart';
 import './screens/admin_screens/list_all_officers.dart';
 import './screens/admin_screens/officer_detail_screen.dart';
+import './screens/about_screen.dart';
 
 import './widgets/app_retain_widget.dart';
 
@@ -59,6 +61,8 @@ class MyApp extends StatelessWidget {
         ListAllOfficersScreen.routeName: (ctx) => ListAllOfficersScreen(),
         FeedbackScreen.routeName: (ctx) => FeedbackScreen(),
         OfficerDetailScreen.routeName: (ctx) => OfficerDetailScreen(),
+        HelpScreen.routeName: (ctx) => HelpScreen(),
+        AboutScreen.routeName: (ctx) => AboutScreen(),
       },
     ));
   }
